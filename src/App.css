@@ -1,0 +1,12 @@
+.App {
+  box-sizing: none;
+}
+
+a {
+  color: black !important;
+  text-decoration: none !important;
+}
+
+ul {
+  list-style-type: none !important;
+}
