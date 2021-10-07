@@ -1,11 +1,13 @@
 import "./App.css";
-// eslint-disable-next-line
 import { Route, Switch } from "react-router-dom";
+import Register from "./pages/Register";
 
 function App() {
   return (
     <div className="App">
-      <Switch></Switch>
+      <Switch>
+        <Route path="/" component={Register} exact />
+      </Switch>
     </div>
   );
 }
