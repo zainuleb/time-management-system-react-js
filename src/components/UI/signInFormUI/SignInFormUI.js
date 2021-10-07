@@ -1,13 +1,14 @@
 import React, { useState } from "react";
-import styles from "./SignUpFormUI.module.css";
+import styles from "./SignInFormUI.module.css";
+import { useDispatch } from "react-redux";
+import { userActions } from "../../../redux/actions/index.js";
 
-const SignUpFormUI = () => {
+const SignInFormUI = () => {
+  let dispatch = useDispatch();
+
   const [userForm, setUserForm] = useState({
-    firstName: "",
-    lastName: "",
     email: "",
     password: "",
-    password_confirmation: "",
   });
 
   const changeHandler = async (e) => {
@@ -17,42 +18,18 @@ const SignUpFormUI = () => {
     });
   };
 
-  const submitHandler = async () => {
-    await setUserForm({
-      ...userForm,
-    });
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    /* userActions.login(userForm.email, userForm.password); */
+    await dispatch(userActions.login(userForm.email, userForm.password));
   };
 
   console.log(userForm);
 
   return (
     <div className={styles.formWrapper}>
-      <div className={styles.formTitle}>Registration Form</div>
+      <div className={styles.formTitle}>Login Form</div>
       <form onSubmit={submitHandler} className={styles.form}>
-        <div className={styles.formInputField}>
-          <label>First Name</label>
-          <input
-            type="text"
-            id="fname"
-            name="firstName"
-            placeholder="Your name.."
-            onChange={changeHandler}
-            value={userForm.firstName}
-            className={styles.formInput}
-          />
-        </div>
-        <div className={styles.formInputField}>
-          <label>Last Name</label>
-          <input
-            type="text"
-            id="lname"
-            name="lastName"
-            placeholder="Your last name.."
-            onChange={changeHandler}
-            value={userForm.lastName}
-            className={styles.formInput}
-          />
-        </div>
         <div className={styles.formInputField}>
           <label>Email Address</label>
           <input
@@ -77,18 +54,7 @@ const SignUpFormUI = () => {
             className={styles.formInput}
           />
         </div>
-        <div className={styles.formInputField}>
-          <label>Confirm Password</label>
-          <input
-            type="password"
-            id="password_confirmation"
-            name="password_confirmation"
-            placeholder="Confirm Password"
-            onChange={changeHandler}
-            value={userForm.password_confirmation}
-            className={styles.formInput}
-          />
-        </div>
+
         {/* <div className={styles.formInputField}>
           <label>Role</label>
           <div className={styles.customSelect}>
@@ -116,4 +82,18 @@ const SignUpFormUI = () => {
   );
 };
 
-export default SignUpFormUI;
+/* function mapState(state) {
+  const { loggingIn } = state.authentication;
+  return { loggingIn };
+}
+ */
+/* const actionCreators = {
+  login: userActions.login,
+  logout: userActions.logout,
+}; */
+/* 
+const connectedLoginPage = connect(mapState, actionCreators)(SignInFormUI);
+export { connectedLoginPage as SignInFormUI };
+ */
+
+export default SignInFormUI;
