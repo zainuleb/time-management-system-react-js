@@ -1,2 +1,2 @@
-export * from "./users.constants.js";
+export * from "./managers.constants.js";
 export * from "./alert.constants";

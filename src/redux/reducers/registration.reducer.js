@@ -1,12 +1,12 @@
-import { userConstants } from "../constants/index.js";
+import { managersConstants } from "../constants/index.js";
 
 export function registration(state = {}, action) {
   switch (action.type) {
-    case userConstants.REGISTER_REQUEST:
+    case managersConstants.REGISTER_REQUEST:
       return { registering: true };
-    case userConstants.REGISTER_SUCCESS:
+    case managersConstants.REGISTER_SUCCESS:
       return {};
-    case userConstants.REGISTER_FAILURE:
+    case managersConstants.REGISTER_FAILURE:
       return {};
     default:
       return state;

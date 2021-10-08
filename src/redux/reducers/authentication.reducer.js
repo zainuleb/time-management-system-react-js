@@ -1,4 +1,4 @@
-import { userConstants } from "../constants/index.js";
+import { managersConstants } from "../constants/index.js";
 
 /* let user = JSON.parse(localStorage.getItem("user")); */
 /* const initialState = user ? { loggedIn: true, user } : {}; */
@@ -10,18 +10,18 @@ const initialState = {
 };
 export function authentication(state = initialState, action) {
   switch (action.type) {
-    case userConstants.LOGIN_REQUEST:
+    case managersConstants.LOGIN_REQUEST:
       return {
         loggingIn: true,
       };
-    case userConstants.LOGIN_SUCCESS:
+    case managersConstants.LOGIN_SUCCESS:
       return {
         loggedIn: true,
         user: action.user,
       };
-    case userConstants.LOGIN_FAILURE:
+    case managersConstants.LOGIN_FAILURE:
       return {};
-    case userConstants.LOGOUT:
+    case managersConstants.LOGOUT:
       return {};
     default:
       return state;

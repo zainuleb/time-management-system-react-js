@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./SignInFormUI.module.css";
 import { useDispatch } from "react-redux";
-import { userActions } from "../../../redux/actions/index.js";
+import { managersActions } from "../../../redux/actions/index.js";
 
 const SignInFormUI = () => {
   let dispatch = useDispatch();
@@ -21,7 +21,7 @@ const SignInFormUI = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     /* userActions.login(userForm.email, userForm.password); */
-    await dispatch(userActions.login(userForm.email, userForm.password));
+    await dispatch(managersActions.login(userForm.email, userForm.password));
   };
 
   console.log(userForm);
