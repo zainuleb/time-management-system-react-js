@@ -1,12 +1,8 @@
-import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
+import React from "react";
+import Profile from "../components/profile/Profile";
 
 const Dashboard = () => {
-  const { manager } = useSelector((state) => state.authentication);
-
-  useEffect(() => {}, [manager]);
-
-  return <div>Welcome to Dashboard Mr. {manager.firstName}</div>;
+  return <Profile />;
 };
 
 export default Dashboard;

@@ -1,15 +1,23 @@
-import React, { useState } from "react";
+import React, { useState /* , useRef */ } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Redirect } from "react-router-dom";
+import { login } from "../../../redux/actions/auth.js";
 import styles from "./SignInFormUI.module.css";
-import { useDispatch } from "react-redux";
-import { managersActions } from "../../../redux/actions/index.js";
+/* import { managersActions } from "../../../redux/actions/index.js"; */
 
-const SignInFormUI = () => {
+const SignInFormUI = (props) => {
+  /*   const form = useRef();
+  const checkBtn = useRef(); */
   let dispatch = useDispatch();
 
   const [userForm, setUserForm] = useState({
     email: "",
     password: "",
   });
+
+  const [loading, setLoading] = useState(false);
+  const { isLoggedIn } = useSelector((state) => state.auth);
+  const { message } = useSelector((state) => state.message);
 
   const changeHandler = async (e) => {
     await setUserForm({
@@ -20,9 +28,20 @@ const SignInFormUI = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    /* userActions.login(userForm.email, userForm.password); */
-    await dispatch(managersActions.login(userForm.email, userForm.password));
+    setLoading(true);
+    dispatch(login(userForm.email, userForm.password))
+      .then(() => {
+        props.history.push("/profile");
+        window.location.reload();
+      })
+      .catch(() => {
+        setLoading(false);
+      });
   };
+
+  if (isLoggedIn) {
+    return <Redirect to="/dashboard" />;
+  }
 
   console.log(userForm);
 
@@ -54,6 +73,22 @@ const SignInFormUI = () => {
             className={styles.formInput}
           />
         </div>
+        <div className="form-group">
+          <button className="btn btn-primary btn-block" disabled={loading}>
+            {loading && (
+              <span className="spinner-border spinner-border-sm"></span>
+            )}
+            <span>Login</span>
+          </button>
+        </div>
+
+        {message && (
+          <div className="form-group">
+            <div className="alert alert-danger" role="alert">
+              {message}
+            </div>
+          </div>
+        )}
 
         {/* <div className={styles.formInputField}>
           <label>Role</label>

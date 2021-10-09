@@ -1,4 +1,5 @@
 import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 import { Route, Switch } from "react-router-dom";
 
 import Register from "./pages/Register";
