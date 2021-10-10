@@ -1,13 +1,24 @@
-import React, { useState } from "react";
-import styles from "./SignUpFormUI.module.css";
-import Button from "../button/Button.js";
+import React, { useState, useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
 
-//Redux Imports
 import { useDispatch, useSelector } from "react-redux";
-import { register } from "../../../redux/actions/auth.actions";
-import { addUser } from "../../../redux/actions/users.actions";
+import { updateUser } from "../../redux/actions/users.actions";
+import { clearMessage } from "../../redux/actions/message.actions";
 
-const SignUpFormUI = () => {
+import styles from "./EditForm.module.css";
+
+const EditForm = () => {
+  const { id } = useParams();
+  const dispatch = useDispatch();
+
+  const { user } = useSelector((state) => state.auth);
+  const { users } = useSelector((state) => state.users);
+
+  const { message } = useSelector((state) => state.message);
+
+  const [loading, setLoading] = useState(false);
+  const [successful, setSuccessful] = useState(false);
+
   const [userForm, setUserForm] = useState({
     firstName: "",
     lastName: "",
@@ -16,12 +27,16 @@ const SignUpFormUI = () => {
     password_confirmation: "",
   });
 
-  const [loading, setLoading] = useState(false);
-  const [successful, setSuccessful] = useState(false);
-  const { message } = useSelector((state) => state.message);
-  const { user } = useSelector((state) => state.auth);
-
-  const dispatch = useDispatch();
+  useEffect(() => {
+    if (users.length > 0) {
+      setUserForm(
+        users.find((user) => {
+          return user.id.toString() === id.toString();
+        })
+      );
+    }
+    // eslint-disable-next-line
+  }, [users]);
 
   const changeHandler = async (e) => {
     await setUserForm({
@@ -30,23 +45,16 @@ const SignUpFormUI = () => {
     });
   };
 
-  //Func for Signing Up Manager
-  const submitManagerRegisterHandler = async (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
     setSuccessful(false);
     setLoading(true);
-    dispatch(
-      register(
-        userForm.firstName,
-        userForm.lastName,
-        userForm.email,
-        userForm.password,
-        userForm.password_confirmation
-      )
-    )
+    const editRegUser = { ...userForm, userType: "users" };
+    dispatch(updateUser(id, editRegUser, user.token))
       .then(() => {
         setSuccessful(true);
         setLoading(false);
+        refreshMessage();
       })
       .catch(() => {
         setSuccessful(false);
@@ -54,29 +62,14 @@ const SignUpFormUI = () => {
       });
   };
 
-  //Func for Adding User by Manager
-  const regularUserAddSubmit = (e) => {
-    e.preventDefault();
-    setSuccessful(false);
-    setLoading(true);
-    const regUser = { ...userForm, userType: "users" };
-    dispatch(addUser(regUser, user.token))
-      .then(() => {
-        setSuccessful(true);
-        setLoading(false);
-      })
-      .catch(() => {
-        setSuccessful(false);
-        setLoading(false);
-      });
+  const refreshMessage = () => {
+    dispatch(clearMessage());
   };
 
   return (
     <div className={styles.formWrapper}>
-      <div className={styles.formTitle}>
-        {user ? "Add User Form" : "Registration Form"}
-      </div>
-      <form className={styles.form}>
+      <div className={styles.formTitle}>Update User</div>
+      <form onSubmit={submitHandler} className={styles.form}>
         {!successful && (
           <>
             <div className={styles.formInputField}>
@@ -109,7 +102,7 @@ const SignUpFormUI = () => {
                 type="text"
                 id="email"
                 name="email"
-                placeholder="Your email Address.."
+                placeholder="Your email Address"
                 onChange={changeHandler}
                 value={userForm.email}
                 className={styles.formInput}
@@ -121,7 +114,7 @@ const SignUpFormUI = () => {
                 type="password"
                 id="password"
                 name="password"
-                placeholder="Your password.."
+                placeholder="Your password"
                 onChange={changeHandler}
                 value={userForm.password}
                 className={styles.formInput}
@@ -139,15 +132,15 @@ const SignUpFormUI = () => {
                 className={styles.formInput}
               />
             </div>
-            {user ? (
-              <Button loading={loading} submit={regularUserAddSubmit}>
-                Add Regular User
-              </Button>
-            ) : (
-              <Button loading={loading} submit={submitManagerRegisterHandler}>
-                Register
-              </Button>
-            )}
+
+            <div className="form-group">
+              <button className="btn btn-primary btn-block" disabled={loading}>
+                {loading && (
+                  <span className="spinner-border spinner-border-sm"></span>
+                )}
+                <span>Update User</span>
+              </button>
+            </div>
           </>
         )}
 
@@ -161,6 +154,15 @@ const SignUpFormUI = () => {
             >
               {message}
             </div>
+            <div className={styles.formInputField}>
+              <Link
+                to="/showUsers"
+                onClick={refreshMessage}
+                className={styles.formBtn}
+              >
+                Go to Login
+              </Link>
+            </div>
           </div>
         )}
       </form>
@@ -168,4 +170,4 @@ const SignUpFormUI = () => {
   );
 };
 
-export default SignUpFormUI;
+export default EditForm;

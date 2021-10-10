@@ -1,29 +1,10 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getUsers, delUser } from "../../../redux/actions/users.actions";
+import React from "react";
 import * as Icon from "react-bootstrap-icons";
 import { Link } from "react-router-dom";
 
-const GetUsers = () => {
-  let dispatch = useDispatch();
-  const { user } = useSelector((state) => state.auth);
-  const { users } = useSelector((state) => state.users);
-
-  useEffect(() => {
-    try {
-      if (user) {
-        dispatch(getUsers(user.token));
-      }
-    } catch (error) {
-      console.log(error);
-    }
-    // eslint-disable-next-line
-  }, [user, users]);
-
-  const editHandler = (e) => {};
-
+const UsersTableUI = ({ user, users, delUser, dispatch }) => {
   return (
-    <table className="table text-center">
+    <table className="table text-center table-bordered table-dark">
       <thead>
         <tr>
           <th scope="col">#</th>
@@ -39,7 +20,6 @@ const GetUsers = () => {
         {users ? (
           users.map((userRow) => {
             const id = userRow.id;
-
             return (
               <tr key={userRow.id}>
                 <th scope="row">{userRow.id}</th>
@@ -49,13 +29,13 @@ const GetUsers = () => {
                 <td>
                   {userRow.working_hours ? userRow.working_hours : "null"}
                 </td>
-                <td onClick={editHandler}>
+                <td>
                   <Link to={`/editUser/${id}`}>
-                    <Icon.Pen size={28} />
+                    <Icon.Pen color={"white"} size={26} />
                   </Link>
                 </td>
                 <td onClick={() => dispatch(delUser(userRow.id, user.token))}>
-                  <Icon.Trash size={28} />
+                  <Icon.Trash size={26} />
                 </td>
               </tr>
             );
@@ -70,4 +50,4 @@ const GetUsers = () => {
   );
 };
 
-export default GetUsers;
+export default UsersTableUI;

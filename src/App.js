@@ -6,9 +6,8 @@ import Register from "./pages/Register";
 import Login from "./pages/Login.js";
 import Navbar from "./components/navbar/Navbar";
 import Dashboard from "./pages/Dashboard";
-import GetUsers from "./components/users/getUsers/GetUsers";
-import AddUser from "./components/users/addUsers/AddUser";
-import EditForm from "./components/UI/editForm/EditForm";
+import AddUser from "./pages/AddUser.js";
+import EditForm from "./components/editForm/EditForm.js";
 
 function App() {
   return (
@@ -18,8 +17,8 @@ function App() {
         <Route path="/login" component={Login} exact />
         <Route path="/register" component={Register} />
 
+        {/* User Routes */}
         <Route path="/dashboard" component={Dashboard} />
-        <Route path="/showUsers" component={GetUsers} />
         <Route path="/addUser" component={AddUser} />
         <Route path="/editUser/:id" component={EditForm} />
       </Switch>

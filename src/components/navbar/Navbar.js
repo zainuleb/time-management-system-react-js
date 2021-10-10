@@ -78,8 +78,8 @@ const Navbar = () => {
           {showManagerBoard && (
             <>
               <li className="nav-item">
-                <Link to={"/showUsers"} className="nav-link text-dark">
-                  Show All Users
+                <Link to={"/dashboard"} className="nav-link text-dark">
+                  My Dashboard
                 </Link>
               </li>
               <li className="nav-item">

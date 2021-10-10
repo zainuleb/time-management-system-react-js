@@ -10,11 +10,12 @@ const Profile = () => {
   }
 
   return (
-    <div className="container">
+    <div className="container p-2 m-3">
       <header className="jumbotron">
         <h3>
-          <strong>{user.user.firstName + "'s"}</strong> Profile
+          Welcome <strong>{user.user.firstName} </strong>
         </h3>
+        <h5>Look how your users are doing today :)</h5>
       </header>
     </div>
   );
