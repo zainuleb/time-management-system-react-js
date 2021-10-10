@@ -1,15 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-
-import { register } from "../../../redux/actions/auth";
-
+import React, { useState } from "react";
 import styles from "./SignUpFormUI.module.css";
-import { clearMessage } from "../../../redux/actions/message";
+import Button from "../button/Button.js";
+
+//Redux Imports
+import { useDispatch, useSelector } from "react-redux";
+import { register } from "../../../redux/actions/auth.actions";
 import { addUser } from "../../../redux/actions/users.actions";
 
-const SignUpFormUI = (role) => {
-  const [loading, setLoading] = useState(false);
+const SignUpFormUI = () => {
   const [userForm, setUserForm] = useState({
     firstName: "",
     lastName: "",
@@ -18,10 +16,11 @@ const SignUpFormUI = (role) => {
     password_confirmation: "",
   });
 
+  const [loading, setLoading] = useState(false);
   const [successful, setSuccessful] = useState(false);
   const { message } = useSelector((state) => state.message);
   const { user } = useSelector((state) => state.auth);
-  useEffect(() => {}, [user]);
+
   const dispatch = useDispatch();
 
   const changeHandler = async (e) => {
@@ -31,7 +30,8 @@ const SignUpFormUI = (role) => {
     });
   };
 
-  const submitHandler = async (e) => {
+  //Func for Signing Up Manager
+  const submitManagerRegisterHandler = async (e) => {
     e.preventDefault();
     setSuccessful(false);
     setLoading(true);
@@ -47,7 +47,6 @@ const SignUpFormUI = (role) => {
       .then(() => {
         setSuccessful(true);
         setLoading(false);
-        refreshMessage();
       })
       .catch(() => {
         setSuccessful(false);
@@ -55,11 +54,8 @@ const SignUpFormUI = (role) => {
       });
   };
 
-  const refreshMessage = () => {
-    dispatch(clearMessage());
-  };
-
-  const regularUserSubmit = (e) => {
+  //Func for Adding User by Manager
+  const regularUserAddSubmit = (e) => {
     e.preventDefault();
     setSuccessful(false);
     setLoading(true);
@@ -77,8 +73,10 @@ const SignUpFormUI = (role) => {
 
   return (
     <div className={styles.formWrapper}>
-      <div className={styles.formTitle}>Registration Form</div>
-      <form onSubmit={submitHandler} className={styles.form}>
+      <div className={styles.formTitle}>
+        {user ? "Add User Form" : "Registration Form"}
+      </div>
+      <form className={styles.form}>
         {!successful && (
           <>
             <div className={styles.formInputField}>
@@ -111,7 +109,7 @@ const SignUpFormUI = (role) => {
                 type="text"
                 id="email"
                 name="email"
-                placeholder="Your email Address"
+                placeholder="Your email Address.."
                 onChange={changeHandler}
                 value={userForm.email}
                 className={styles.formInput}
@@ -123,7 +121,7 @@ const SignUpFormUI = (role) => {
                 type="password"
                 id="password"
                 name="password"
-                placeholder="Your password"
+                placeholder="Your password.."
                 onChange={changeHandler}
                 value={userForm.password}
                 className={styles.formInput}
@@ -141,27 +139,14 @@ const SignUpFormUI = (role) => {
                 className={styles.formInput}
               />
             </div>
-            {role ? (
-              <div className="form-group">
-                <button
-                  className="btn btn-primary btn-block"
-                  disabled={loading}
-                  onClick={regularUserSubmit}
-                >
-                  {loading && (
-                    <span className="spinner-border spinner-border-sm"></span>
-                  )}
-                  <span>Add Regular User</span>
-                </button>
-              </div>
+            {user ? (
+              <Button loading={loading} submit={regularUserAddSubmit}>
+                Add Regular User
+              </Button>
             ) : (
-              <div className={styles.formInputField}>
-                <input
-                  type="submit"
-                  value="Register"
-                  className={styles.formBtn}
-                />
-              </div>
+              <Button loading={loading} submit={submitManagerRegisterHandler}>
+                Register
+              </Button>
             )}
           </>
         )}
@@ -176,15 +161,6 @@ const SignUpFormUI = (role) => {
             >
               {message}
             </div>
-            <div className={styles.formInputField}>
-              <Link
-                to="/login"
-                onClick={refreshMessage}
-                className={styles.formBtn}
-              >
-                Go to Login
-              </Link>
-            </div>
           </div>
         )}
       </form>
@@ -193,23 +169,3 @@ const SignUpFormUI = (role) => {
 };
 
 export default SignUpFormUI;
-
-/* <div className={styles.formInputField}>
-          <label>Role</label>
-          <div className={styles.customSelect}>
-            <select>
-              <option value="">Select</option>
-              <option value="user">User</option>
-              <option value="manager">Manager</option>
-              <option value="Admin">Admin</option>
-            </select>
-          </div>
-        </div> */
-
-/*         <div className={styles.formInputField}>
-          <label className={`${styles.formCheck} ${styles.terms}`}>
-            <input type="checkbox" />
-            <span className={styles.formCheckmark}></span>
-          </label>
-          <p>Agreed to terms and conditions</p>
-        </div> */

@@ -2,6 +2,7 @@ import axios from "axios";
 
 const API_URL = "http://34.210.129.167/api/users";
 
+//Func to Get Users
 const getUsers = (token) => {
   return axios
     .get(API_URL, {
@@ -14,6 +15,7 @@ const getUsers = (token) => {
     });
 };
 
+//Func to Add Users
 const addUser = (data, token) => {
   return axios
     .post(
@@ -37,7 +39,8 @@ const addUser = (data, token) => {
     });
 };
 
-const editUser = (id, data, token) => {
+//Func to Update Users
+const updateUser = (id, data, token) => {
   console.log(id, token);
   return axios
     .put(
@@ -61,6 +64,7 @@ const editUser = (id, data, token) => {
     });
 };
 
+//Func to Delete Users
 const delUser = (id, token) => {
   console.log(id, token);
   return axios
@@ -79,5 +83,5 @@ export default {
   getUsers,
   addUser,
   delUser,
-  editUser,
+  updateUser,
 };

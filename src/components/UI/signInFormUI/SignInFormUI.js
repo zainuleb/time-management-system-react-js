@@ -1,8 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import Button from "../button/Button.js";
+import styles from "./SignInFormUI.module.css";
+
+//Redux Imports
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
-import { login } from "../../../redux/actions/auth.js";
-import styles from "./SignInFormUI.module.css";
+import { login } from "../../../redux/actions/auth.actions.js";
+import { clearMessage } from "../../../redux/actions/message.actions.js";
 
 const SignInFormUI = (props) => {
   let dispatch = useDispatch();
@@ -28,13 +32,21 @@ const SignInFormUI = (props) => {
     setLoading(true);
     dispatch(login(userForm.email, userForm.password))
       .then(() => {
-        props.history.push("/profile");
+        props.history.push("/dashboard");
         window.location.reload();
       })
       .catch(() => {
         setLoading(false);
       });
   };
+
+  useEffect(() => {
+    return () => {
+      setUserForm({});
+      dispatch(clearMessage());
+    };
+    // eslint-disable-next-line
+  }, []);
 
   if (isLoggedIn) {
     return <Redirect to="/dashboard" />;
@@ -68,14 +80,9 @@ const SignInFormUI = (props) => {
             className={styles.formInput}
           />
         </div>
-        <div className="form-group">
-          <button className="btn btn-primary btn-block" disabled={loading}>
-            {loading && (
-              <span className="spinner-border spinner-border-sm"></span>
-            )}
-            <span>Login</span>
-          </button>
-        </div>
+        <Button loading={loading} submit={submitHandler}>
+          Login
+        </Button>
 
         {message && (
           <div className="form-group">
@@ -88,43 +95,5 @@ const SignInFormUI = (props) => {
     </div>
   );
 };
-
-/* function mapState(state) {
-  const { loggingIn } = state.authentication;
-  return { loggingIn };
-}
- */
-/* const actionCreators = {
-  login: userActions.login,
-  logout: userActions.logout,
-}; */
-/* 
-const connectedLoginPage = connect(mapState, actionCreators)(SignInFormUI);
-export { connectedLoginPage as SignInFormUI };
- */
-
-/* <div className={styles.formInputField}>
-          <label>Role</label>
-          <div className={styles.customSelect}>
-            <select>
-              <option value="">Select</option>
-              <option value="user">User</option>
-              <option value="manager">Manager</option>
-              <option value="Admin">Admin</option>
-            </select>
-          </div>
-        </div> */
-
-/*         <div className={styles.formInputField}>
-          <label className={`${styles.formCheck} ${styles.terms}`}>
-            <input type="checkbox" />
-            <span className={styles.formCheckmark}></span>
-          </label>
-          <p>Agreed to terms and conditions</p>
-        </div> 
-        <div className={styles.formInputField}>
-          <input type="submit" value="Register" className={styles.formBtn} />
-        </div>
-        */
 
 export default SignInFormUI;

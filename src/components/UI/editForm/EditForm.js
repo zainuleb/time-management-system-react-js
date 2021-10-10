@@ -3,13 +3,15 @@ import { Link, useParams } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
 import { updateUser } from "../../../redux/actions/users.actions";
-import { clearMessage } from "../../../redux/actions/message";
+import { clearMessage } from "../../../redux/actions/message.actions";
 
 import styles from "./EditForm.module.css";
 
 const EditForm = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
+
+  const { user } = useSelector((state) => state.auth);
   const { users } = useSelector((state) => state.users);
 
   const { message } = useSelector((state) => state.message);
@@ -33,9 +35,8 @@ const EditForm = () => {
         })
       );
     }
+    // eslint-disable-next-line
   }, [users]);
-
-  console.log(userForm);
 
   const changeHandler = async (e) => {
     await setUserForm({
@@ -48,15 +49,8 @@ const EditForm = () => {
     e.preventDefault();
     setSuccessful(false);
     setLoading(true);
-    dispatch(
-      updateUser(
-        userForm.firstName,
-        userForm.lastName,
-        userForm.email,
-        userForm.password,
-        userForm.password_confirmation
-      )
-    )
+    const editRegUser = { ...userForm, userType: "users" };
+    dispatch(updateUser(id, editRegUser, user.token))
       .then(() => {
         setSuccessful(true);
         setLoading(false);
@@ -144,7 +138,7 @@ const EditForm = () => {
                 {loading && (
                   <span className="spinner-border spinner-border-sm"></span>
                 )}
-                <span>Add Regular User</span>
+                <span>Update User</span>
               </button>
             </div>
           </>

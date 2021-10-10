@@ -1,14 +1,15 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
+//Redux Imports
+import { useDispatch, useSelector } from "react-redux";
 import { history } from "../../redux/helpers/history.js";
-import { logout } from "../../redux/actions/auth.js";
-import { clearMessage } from "../../redux/actions/message.js";
+import { logout } from "../../redux/actions/auth.actions.js";
+import { clearMessage } from "../../redux/actions/message.actions.js";
 import EventBus from "../../common/EventBus.js";
 
 const Navbar = () => {
-  const [showModeratorBoard, setShowModeratorBoard] = useState(false);
+  const [showManagerBoard, setShowManagerBoard] = useState(false);
   const [showAdminBoard, setShowAdminBoard] = useState(false);
 
   const { user: currentUser } = useSelector((state) => state.auth);
@@ -16,7 +17,7 @@ const Navbar = () => {
 
   useEffect(() => {
     history.listen((location) => {
-      dispatch(clearMessage()); // clear message when changing location
+      dispatch(clearMessage());
     });
   }, [dispatch]);
 
@@ -29,13 +30,13 @@ const Navbar = () => {
       let role = currentUser.user.roles[0].name;
 
       if (role === "manager") {
-        setShowModeratorBoard(true);
+        setShowManagerBoard(true);
       }
       if (role === "admin") {
         setShowAdminBoard(true);
       }
     } else {
-      setShowModeratorBoard(false);
+      setShowManagerBoard(false);
       setShowAdminBoard(false);
     }
 
@@ -49,83 +50,82 @@ const Navbar = () => {
   }, [currentUser, logOut]);
 
   return (
-    <nav className="navbar navbar-expand navbar-dark bg-dark">
+    <nav className="navbar navbar-expand-lg navbar-light bg-light">
       {currentUser ? (
-        <Link to={"/dashboard"} className="navbar-brand text-white">
+        <Link to={"/dashboard"} className="navbar-brand text-dark mx-auto">
           UMI
         </Link>
       ) : (
-        <Link to={"/login"} className="navbar-brand text-white">
+        <Link to={"/login"} className="navbar-brand text-dark mx-3 px-3">
           UMI
         </Link>
       )}
-      <div className="navbar-nav mr-auto">
-        {/*         <li className="nav-item">
-          <Link to={"/home"} className="nav-link text-white">
-            Home
-          </Link>
-        </li> */}
 
-        {showModeratorBoard && (
-          <>
+      <button
+        className="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarNavDropdown"
+        aria-controls="navbarNavDropdown"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span className="navbar-toggler-icon"></span>
+      </button>
+
+      <div className="collapse navbar-collapse" id="navbarNavDropdown">
+        <div className="navbar-nav mr-auto ">
+          {showManagerBoard && (
+            <>
+              <li className="nav-item">
+                <Link to={"/showUsers"} className="nav-link text-dark">
+                  Show All Users
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to={"/addUser"} className="nav-link text-dark">
+                  Add User
+                </Link>
+              </li>
+            </>
+          )}
+
+          {showAdminBoard && (
             <li className="nav-item">
-              <Link to={"/showUsers"} className="nav-link text-white">
-                Show All Users
+              <Link to={"/admin"} className="nav-link text-dark">
+                Admin Board
               </Link>
             </li>
+          )}
+        </div>
+        {currentUser ? (
+          <div className="navbar-nav ml-auto">
             <li className="nav-item">
-              <Link to={"/addUser"} className="nav-link text-white">
-                Add User
+              <Link
+                to="/login"
+                className="nav-link text-danger"
+                onClick={logOut}
+              >
+                LogOut
               </Link>
             </li>
-          </>
-        )}
+          </div>
+        ) : (
+          <div className="navbar-nav mx-auto">
+            <li className="nav-item">
+              <Link to={"/login"} className="nav-link text-dark">
+                Login
+              </Link>
+            </li>
 
-        {showAdminBoard && (
-          <li className="nav-item">
-            <Link to={"/admin"} className="nav-link text-white">
-              Admin Board
-            </Link>
-          </li>
-        )}
-
-        {currentUser && (
-          <li className="nav-item">
-            <Link to={"/user"} className="nav-link text-white">
-              User
-            </Link>
-          </li>
+            <li className="nav-item">
+              <Link to={"/register"} className="nav-link text-dark">
+                Sign Up
+              </Link>
+            </li>
+          </div>
         )}
       </div>
-
-      {currentUser ? (
-        <div className="navbar-nav ml-auto">
-          <li className="nav-item">
-            <Link to={"/dashboard"} className="nav-link text-white">
-              {currentUser.user.firstName}'s Dashboard
-            </Link>
-          </li>
-          <li className="nav-item">
-            <a href="/login" className="nav-link text-white" onClick={logOut}>
-              LogOut
-            </a>
-          </li>
-        </div>
-      ) : (
-        <div className="navbar-nav ml-auto">
-          <li className="nav-item">
-            <Link to={"/login"} className="nav-link text-white">
-              Login
-            </Link>
-          </li>
-
-          <li className="nav-item">
-            <Link to={"/register"} className="nav-link text-white">
-              Sign Up
-            </Link>
-          </li>
-        </div>
-      )}
     </nav>
   );
 };

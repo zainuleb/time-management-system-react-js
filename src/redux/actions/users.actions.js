@@ -8,9 +8,11 @@ import {
   EDITUSER_SUCCESS,
   EDITUSER_FAIL,
   SET_MESSAGE,
-} from "./types";
+} from "../helpers/types";
+
 import UserServices from "../services/user.services.js";
 
+//Func to Get Users
 export const getUsers = (token) => (dispatch) => {
   return UserServices.getUsers(token).then(
     (data) => {
@@ -43,6 +45,7 @@ export const getUsers = (token) => (dispatch) => {
   );
 };
 
+//Func to Add Users
 export const addUser = (data, token) => (dispatch) => {
   return UserServices.addUser(data, token).then(
     (data) => {
@@ -75,6 +78,7 @@ export const addUser = (data, token) => (dispatch) => {
   );
 };
 
+//Func to Update Users
 export const updateUser = (id, data, token) => (dispatch) => {
   console.log(id, data, token);
   return UserServices.updateUser(id, data, token).then(
@@ -108,6 +112,7 @@ export const updateUser = (id, data, token) => (dispatch) => {
   );
 };
 
+//Func to Delete Users
 export const delUser = (id, token) => (dispatch) => {
   return UserServices.delUser(id, token).then(
     (data) => {

@@ -17,10 +17,10 @@ function App() {
       <Switch>
         <Route path="/login" component={Login} exact />
         <Route path="/register" component={Register} />
+
         <Route path="/dashboard" component={Dashboard} />
         <Route path="/showUsers" component={GetUsers} />
         <Route path="/addUser" component={AddUser} />
-
         <Route path="/editUser/:id" component={EditForm} />
       </Switch>
     </div>

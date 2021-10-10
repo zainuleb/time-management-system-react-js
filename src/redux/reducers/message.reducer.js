@@ -1,7 +1,8 @@
-import { SET_MESSAGE, CLEAR_MESSAGE } from "../actions/types";
+import { SET_MESSAGE, CLEAR_MESSAGE } from "../helpers/types.js";
 
 const initialState = {};
 
+//Message Function
 export default function message(state = initialState, action) {
   const { type, payload } = action;
 

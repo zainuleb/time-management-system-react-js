@@ -1,9 +1,10 @@
-import { GETUSERS_SUCCESS, GETUSERS_FAIL } from "../actions/types.js";
+import { GETUSERS_SUCCESS, GETUSERS_FAIL } from "../helpers/types.js";
 
 const initialState = {
   users: null,
 };
 
+//Users Functions
 export default function users(state = initialState, action) {
   const { type, payload } = action;
 

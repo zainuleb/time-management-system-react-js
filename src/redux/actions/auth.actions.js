@@ -5,10 +5,11 @@ import {
   LOGIN_FAIL,
   LOGOUT,
   SET_MESSAGE,
-} from "./types";
+} from "../helpers/types";
 
-import AuthService from "../services/auth.services1.js";
+import AuthService from "../services/auth.services.js";
 
+//Func to Register Manager
 export const register =
   (firstName, lastName, email, password, password_confirmation) =>
   (dispatch) => {
@@ -53,6 +54,7 @@ export const register =
     );
   };
 
+//Func to Login Manager
 export const login = (username, password) => (dispatch) => {
   return AuthService.login(username, password).then(
     (data) => {
@@ -85,6 +87,7 @@ export const login = (username, password) => (dispatch) => {
   );
 };
 
+//Func to LogOut Manager
 export const logout = () => (dispatch) => {
   AuthService.logout();
 
