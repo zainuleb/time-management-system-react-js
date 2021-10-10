@@ -1,13 +1,10 @@
-import React, { useState /* , useRef */ } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { login } from "../../../redux/actions/auth.js";
 import styles from "./SignInFormUI.module.css";
-/* import { managersActions } from "../../../redux/actions/index.js"; */
 
 const SignInFormUI = (props) => {
-  /*   const form = useRef();
-  const checkBtn = useRef(); */
   let dispatch = useDispatch();
 
   const [userForm, setUserForm] = useState({
@@ -26,7 +23,7 @@ const SignInFormUI = (props) => {
     });
   };
 
-  const submitHandler = async (e) => {
+  const submitHandler = (e) => {
     e.preventDefault();
     setLoading(true);
     dispatch(login(userForm.email, userForm.password))
@@ -42,8 +39,6 @@ const SignInFormUI = (props) => {
   if (isLoggedIn) {
     return <Redirect to="/dashboard" />;
   }
-
-  console.log(userForm);
 
   return (
     <div className={styles.formWrapper}>
@@ -89,29 +84,6 @@ const SignInFormUI = (props) => {
             </div>
           </div>
         )}
-
-        {/* <div className={styles.formInputField}>
-          <label>Role</label>
-          <div className={styles.customSelect}>
-            <select>
-              <option value="">Select</option>
-              <option value="user">User</option>
-              <option value="manager">Manager</option>
-              <option value="Admin">Admin</option>
-            </select>
-          </div>
-        </div> */}
-
-        {/*         <div className={styles.formInputField}>
-          <label className={`${styles.formCheck} ${styles.terms}`}>
-            <input type="checkbox" />
-            <span className={styles.formCheckmark}></span>
-          </label>
-          <p>Agreed to terms and conditions</p>
-        </div> */}
-        <div className={styles.formInputField}>
-          <input type="submit" value="Register" className={styles.formBtn} />
-        </div>
       </form>
     </div>
   );
@@ -130,5 +102,29 @@ const SignInFormUI = (props) => {
 const connectedLoginPage = connect(mapState, actionCreators)(SignInFormUI);
 export { connectedLoginPage as SignInFormUI };
  */
+
+/* <div className={styles.formInputField}>
+          <label>Role</label>
+          <div className={styles.customSelect}>
+            <select>
+              <option value="">Select</option>
+              <option value="user">User</option>
+              <option value="manager">Manager</option>
+              <option value="Admin">Admin</option>
+            </select>
+          </div>
+        </div> */
+
+/*         <div className={styles.formInputField}>
+          <label className={`${styles.formCheck} ${styles.terms}`}>
+            <input type="checkbox" />
+            <span className={styles.formCheckmark}></span>
+          </label>
+          <p>Agreed to terms and conditions</p>
+        </div> 
+        <div className={styles.formInputField}>
+          <input type="submit" value="Register" className={styles.formBtn} />
+        </div>
+        */
 
 export default SignInFormUI;

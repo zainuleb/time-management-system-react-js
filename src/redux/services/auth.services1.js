@@ -2,11 +2,19 @@ import axios from "axios";
 
 const API_URL = "http://34.210.129.167/api/";
 
-const register = (username, email, password) => {
+const register = (
+  firstName,
+  lastName,
+  email,
+  password,
+  password_confirmation
+) => {
   return axios.post(API_URL + "register", {
-    username,
+    firstName,
+    lastName,
     email,
     password,
+    password_confirmation,
   });
 };
 

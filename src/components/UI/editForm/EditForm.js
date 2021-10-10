@@ -1,15 +1,22 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+
 import { useDispatch, useSelector } from "react-redux";
-
-import { register } from "../../../redux/actions/auth";
-
-import styles from "./SignUpFormUI.module.css";
+import { updateUser } from "../../../redux/actions/users.actions";
 import { clearMessage } from "../../../redux/actions/message";
-import { addUser } from "../../../redux/actions/users.actions";
 
-const SignUpFormUI = (role) => {
+import styles from "./EditForm.module.css";
+
+const EditForm = () => {
+  const { id } = useParams();
+  const dispatch = useDispatch();
+  const { users } = useSelector((state) => state.users);
+
+  const { message } = useSelector((state) => state.message);
+
   const [loading, setLoading] = useState(false);
+  const [successful, setSuccessful] = useState(false);
+
   const [userForm, setUserForm] = useState({
     firstName: "",
     lastName: "",
@@ -18,11 +25,17 @@ const SignUpFormUI = (role) => {
     password_confirmation: "",
   });
 
-  const [successful, setSuccessful] = useState(false);
-  const { message } = useSelector((state) => state.message);
-  const { user } = useSelector((state) => state.auth);
-  useEffect(() => {}, [user]);
-  const dispatch = useDispatch();
+  useEffect(() => {
+    if (users.length > 0) {
+      setUserForm(
+        users.find((user) => {
+          return user.id.toString() === id.toString();
+        })
+      );
+    }
+  }, [users]);
+
+  console.log(userForm);
 
   const changeHandler = async (e) => {
     await setUserForm({
@@ -36,7 +49,7 @@ const SignUpFormUI = (role) => {
     setSuccessful(false);
     setLoading(true);
     dispatch(
-      register(
+      updateUser(
         userForm.firstName,
         userForm.lastName,
         userForm.email,
@@ -59,25 +72,9 @@ const SignUpFormUI = (role) => {
     dispatch(clearMessage());
   };
 
-  const regularUserSubmit = (e) => {
-    e.preventDefault();
-    setSuccessful(false);
-    setLoading(true);
-    const regUser = { ...userForm, userType: "users" };
-    dispatch(addUser(regUser, user.token))
-      .then(() => {
-        setSuccessful(true);
-        setLoading(false);
-      })
-      .catch(() => {
-        setSuccessful(false);
-        setLoading(false);
-      });
-  };
-
   return (
     <div className={styles.formWrapper}>
-      <div className={styles.formTitle}>Registration Form</div>
+      <div className={styles.formTitle}>Update User</div>
       <form onSubmit={submitHandler} className={styles.form}>
         {!successful && (
           <>
@@ -141,28 +138,15 @@ const SignUpFormUI = (role) => {
                 className={styles.formInput}
               />
             </div>
-            {role ? (
-              <div className="form-group">
-                <button
-                  className="btn btn-primary btn-block"
-                  disabled={loading}
-                  onClick={regularUserSubmit}
-                >
-                  {loading && (
-                    <span className="spinner-border spinner-border-sm"></span>
-                  )}
-                  <span>Add Regular User</span>
-                </button>
-              </div>
-            ) : (
-              <div className={styles.formInputField}>
-                <input
-                  type="submit"
-                  value="Register"
-                  className={styles.formBtn}
-                />
-              </div>
-            )}
+
+            <div className="form-group">
+              <button className="btn btn-primary btn-block" disabled={loading}>
+                {loading && (
+                  <span className="spinner-border spinner-border-sm"></span>
+                )}
+                <span>Add Regular User</span>
+              </button>
+            </div>
           </>
         )}
 
@@ -178,7 +162,7 @@ const SignUpFormUI = (role) => {
             </div>
             <div className={styles.formInputField}>
               <Link
-                to="/login"
+                to="/showUsers"
                 onClick={refreshMessage}
                 className={styles.formBtn}
               >
@@ -192,24 +176,4 @@ const SignUpFormUI = (role) => {
   );
 };
 
-export default SignUpFormUI;
-
-/* <div className={styles.formInputField}>
-          <label>Role</label>
-          <div className={styles.customSelect}>
-            <select>
-              <option value="">Select</option>
-              <option value="user">User</option>
-              <option value="manager">Manager</option>
-              <option value="Admin">Admin</option>
-            </select>
-          </div>
-        </div> */
-
-/*         <div className={styles.formInputField}>
-          <label className={`${styles.formCheck} ${styles.terms}`}>
-            <input type="checkbox" />
-            <span className={styles.formCheckmark}></span>
-          </label>
-          <p>Agreed to terms and conditions</p>
-        </div> */
+export default EditForm;
