@@ -59,7 +59,7 @@ const SignUpForm = () => {
     e.preventDefault();
     setSuccessful(false);
     setLoading(true);
-    const regUser = { ...userForm, userType: "users" };
+    const regUser = { ...userForm, userType: "user" };
     dispatch(addUser(regUser, user.token))
       .then(() => {
         setSuccessful(true);

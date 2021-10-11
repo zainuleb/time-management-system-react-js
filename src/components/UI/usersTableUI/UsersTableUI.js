@@ -1,13 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import * as Icon from "react-bootstrap-icons";
 import { Link } from "react-router-dom";
 
 const UsersTableUI = ({ user, users, delUser, dispatch }) => {
+  useEffect(() => {}, [users]);
   return (
     <table className="table text-center table-bordered table-dark">
       <thead>
         <tr>
-          <th scope="col">#</th>
+          <th scope="col">Id #</th>
           <th scope="col">First Name</th>
           <th scope="col">Last Name</th>
           <th scope="col">Email</th>
@@ -26,9 +27,7 @@ const UsersTableUI = ({ user, users, delUser, dispatch }) => {
                 <td>{userRow.firstName}</td>
                 <td>{userRow.lastName}</td>
                 <td>{userRow.email}</td>
-                <td>
-                  {userRow.working_hours ? userRow.working_hours : "null"}
-                </td>
+                <td>{userRow.working_hours ? userRow.working_hours : "-"}</td>
                 <td>
                   <Link to={`/editUser/${id}`}>
                     <Icon.Pen color={"white"} size={26} />

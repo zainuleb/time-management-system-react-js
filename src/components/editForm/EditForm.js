@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import styles from "./EditForm.module.css";
+import Button from "../UI/button/Button.js";
 
+//Redux Imports
 import { useDispatch, useSelector } from "react-redux";
 import { updateUser } from "../../redux/actions/users.actions";
 import { clearMessage } from "../../redux/actions/message.actions";
-
-import styles from "./EditForm.module.css";
 
 const EditForm = () => {
   const { id } = useParams();
@@ -25,15 +26,20 @@ const EditForm = () => {
     email: "",
     password: "",
     password_confirmation: "",
+    userType: "users",
   });
 
   useEffect(() => {
     if (users.length > 0) {
-      setUserForm(
-        users.find((user) => {
-          return user.id.toString() === id.toString();
-        })
-      );
+      const userData = users.find((user) => {
+        return user.id.toString() === id.toString();
+      });
+
+      setUserForm({
+        firstName: userData.firstName,
+        lastName: userData.lastName,
+        email: userData.email,
+      });
     }
     // eslint-disable-next-line
   }, [users]);
@@ -49,7 +55,7 @@ const EditForm = () => {
     e.preventDefault();
     setSuccessful(false);
     setLoading(true);
-    const editRegUser = { ...userForm, userType: "users" };
+    const editRegUser = { ...userForm, userType: "user" };
     dispatch(updateUser(id, editRegUser, user.token))
       .then(() => {
         setSuccessful(true);
@@ -133,14 +139,9 @@ const EditForm = () => {
               />
             </div>
 
-            <div className="form-group">
-              <button className="btn btn-primary btn-block" disabled={loading}>
-                {loading && (
-                  <span className="spinner-border spinner-border-sm"></span>
-                )}
-                <span>Update User</span>
-              </button>
-            </div>
+            <Button loading={loading} submit={submitHandler}>
+              Update User
+            </Button>
           </>
         )}
 
@@ -153,15 +154,6 @@ const EditForm = () => {
               role="alert"
             >
               {message}
-            </div>
-            <div className={styles.formInputField}>
-              <Link
-                to="/showUsers"
-                onClick={refreshMessage}
-                className={styles.formBtn}
-              >
-                Go to Login
-              </Link>
             </div>
           </div>
         )}

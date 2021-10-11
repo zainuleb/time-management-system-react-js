@@ -9,8 +9,10 @@ import { clearMessage } from "../../redux/actions/message.actions.js";
 import EventBus from "../../common/EventBus.js";
 
 const Navbar = () => {
-  const [showManagerBoard, setShowManagerBoard] = useState(false);
+  //Role States of Respective Users
   const [showAdminBoard, setShowAdminBoard] = useState(false);
+  const [showManagerBoard, setShowManagerBoard] = useState(false);
+  const [showUserBoard, setShowUserBoard] = useState(false);
 
   const { user: currentUser } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
@@ -35,9 +37,13 @@ const Navbar = () => {
       if (role === "admin") {
         setShowAdminBoard(true);
       }
+      if (role === "user") {
+        setShowUserBoard(true);
+      }
     } else {
       setShowManagerBoard(false);
       setShowAdminBoard(false);
+      setShowUserBoard(false);
     }
 
     EventBus.on("logout", () => {
@@ -96,6 +102,21 @@ const Navbar = () => {
                 Admin Board
               </Link>
             </li>
+          )}
+
+          {showUserBoard && (
+            <>
+              <li className="nav-item">
+                <Link to={"/dashboard"} className="nav-link text-dark">
+                  My Dashboard
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to={"/addLogs"} className="nav-link text-dark">
+                  Add Logs
+                </Link>
+              </li>
+            </>
           )}
         </div>
         {currentUser ? (

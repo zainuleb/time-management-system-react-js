@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { getLogs } from "../../redux/actions/logs.actions";
 import { getUsers, delUser } from "../../redux/actions/users.actions";
 
 import UsersTableUI from "../UI/usersTableUI/UsersTableUI";
@@ -11,17 +12,29 @@ const UsersTable = () => {
 
   useEffect(() => {
     try {
-      if (user) {
+      if (user.user.roles[0].name === "manager") {
         dispatch(getUsers(user.token));
+      }
+      if (user.user.roles[0].name === "users") {
+        dispatch(getLogs());
       }
     } catch (error) {
       console.log(error);
     }
     // eslint-disable-next-line
-  }, [user, users]);
+  }, [user]);
+
+  useEffect(() => {
+    dispatch(getUsers(user.token));
+  }, [users]);
 
   return (
-    <Table user={user} users={users} delUser={delUser} dispatch={dispatch} />
+    <UsersTableUI
+      user={user}
+      users={users}
+      delUser={delUser}
+      dispatch={dispatch}
+    />
   );
 };
 

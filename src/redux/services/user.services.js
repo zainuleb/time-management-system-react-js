@@ -41,7 +41,6 @@ const addUser = (data, token) => {
 
 //Func to Update Users
 const updateUser = (id, data, token) => {
-  console.log(id, token);
   return axios
     .put(
       API_URL + `/${id}`,
@@ -66,7 +65,6 @@ const updateUser = (id, data, token) => {
 
 //Func to Delete Users
 const delUser = (id, token) => {
-  console.log(id, token);
   return axios
     .delete(API_URL + `/${id}`, {
       headers: {
