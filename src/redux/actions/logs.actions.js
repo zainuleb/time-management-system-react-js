@@ -18,7 +18,7 @@ export const getLogs = (id, token) => (dispatch) => {
     (data) => {
       dispatch({
         type: GETLOGS_SUCCESS,
-        payload: { Logs: data.Logs.data },
+        payload: { Logs: data },
       });
 
       return Promise.resolve();
@@ -46,8 +46,8 @@ export const getLogs = (id, token) => (dispatch) => {
 };
 
 //Func to Add Log
-export const addLog = (data, token) => (dispatch) => {
-  return LogServices.addLog(data, token).then(
+export const addLog = (token, data) => (dispatch) => {
+  return LogServices.addLog(token, data).then(
     (data) => {
       dispatch({
         type: ADDLOG_SUCCESS,
@@ -113,8 +113,8 @@ export const updateLog = (id, data, token) => (dispatch) => {
 };
 
 //Func to Delete Logs
-export const delLog = (id, token) => (dispatch) => {
-  return LogServices.delLog(id, token).then(
+export const patchLog = (id, logId, token) => (dispatch) => {
+  return LogServices.delLog(id, logId, token).then(
     (data) => {
       dispatch({
         type: DELLOG_SUCCESS,

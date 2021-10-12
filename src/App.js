@@ -18,7 +18,7 @@ import EditForm from "./components/editForm/EditForm.js";
 
 //User Imports
 import AddLog from "./pages/userPages/AddLog";
-import EditLog from "./pages/userPages/EditLog";
+import EditLog from "./pages/userPages/EditLog.js";
 
 function App() {
   return (
@@ -26,12 +26,12 @@ function App() {
       <Navbar />
       <Switch>
         <Route path="/login" component={Login} exact />
+        <Route path="/register" component={Register} />
         <Route path="/dashboard" component={Dashboard} />
 
         {/* Admin Routes */}
 
         {/* Manager Routes */}
-        <ManagerRoutes path="/register" component={Register} />
         <ManagerRoutes path="/addUser" exact component={AddUser} />
         <ManagerRoutes path="/editUser/:id" component={EditForm} />
 

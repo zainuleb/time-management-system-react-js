@@ -5,6 +5,23 @@ import { useSelector } from "react-redux";
 const Profile = () => {
   const { user } = useSelector((state) => state.auth);
 
+  let subTitle = <h5>How are you doing today :)</h5>;
+
+  if (user.user.roles[0].name === "manager") {
+    subTitle = (
+      <h5>
+        See how your <strong>Users</strong> are doing today :)
+      </h5>
+    );
+  }
+  if (user.user.roles[0].name === "user") {
+    subTitle = (
+      <h5>
+        See how are your <strong>Logs</strong> :)
+      </h5>
+    );
+  }
+
   if (!user) {
     return <Redirect to="/login" />;
   }
@@ -15,7 +32,7 @@ const Profile = () => {
         <h3>
           Welcome <strong>{user.user.firstName} </strong>
         </h3>
-        <h5>Look how your users are doing today :)</h5>
+        {subTitle}
       </header>
     </div>
   );
