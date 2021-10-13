@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./AddLog.module.css";
 import Button from "../../components/UI/button/Button.js";
 
 //Redux Imports
 import { useDispatch, useSelector } from "react-redux";
 import { addLog } from "../../redux/actions/logs.actions";
+import { clearMessage } from "../../redux/actions/message.actions.js";
 
 const AddLog = () => {
   const [logForm, setLogForm] = useState({
@@ -27,7 +28,7 @@ const AddLog = () => {
     });
   };
 
-  //Func for Signing Up Manager
+  //Func for Adding Log
   const submitLogHandler = async (e) => {
     e.preventDefault();
     setSuccessful(false);
@@ -43,7 +44,12 @@ const AddLog = () => {
       });
   };
 
-  console.log(logForm);
+  useEffect(() => {
+    setLogForm({});
+    dispatch(clearMessage());
+
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <div className={styles.formWrapper}>
@@ -62,6 +68,7 @@ const AddLog = () => {
                 onChange={changeHandler}
                 value={logForm.logDate}
                 className={styles.formInput}
+                required
               />
             </div>
             <div className={styles.formInputField}>
@@ -74,6 +81,7 @@ const AddLog = () => {
                 onChange={changeHandler}
                 value={logForm.hours}
                 className={styles.formInput}
+                required
               />
             </div>
             <div className={styles.formInputField}>
@@ -86,6 +94,7 @@ const AddLog = () => {
                 onChange={changeHandler}
                 value={logForm.description}
                 className={styles.formInput}
+                required
               />
             </div>
             <Button loading={loading} submit={submitLogHandler}>
@@ -96,12 +105,7 @@ const AddLog = () => {
 
         {message && (
           <div className="form-group">
-            <div
-              className={
-                successful ? "alert alert-success" : "alert alert-danger"
-              }
-              role="alert"
-            >
+            <div className="alert alert-danger" role="alert">
               {message}
             </div>
           </div>

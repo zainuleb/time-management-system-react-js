@@ -1,6 +1,8 @@
 import { SET_MESSAGE, CLEAR_MESSAGE } from "../helpers/types.js";
 
-const initialState = {};
+const initialState = {
+  message:""
+};
 
 //Message Function
 export default function message(state = initialState, action) {

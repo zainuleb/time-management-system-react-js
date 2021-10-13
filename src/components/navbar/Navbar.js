@@ -15,7 +15,12 @@ const Navbar = () => {
   const [showUserBoard, setShowUserBoard] = useState(false);
 
   const { user: currentUser } = useSelector((state) => state.auth);
+
   const dispatch = useDispatch();
+
+  const clearMessageHandler= ()=>{
+    dispatch(clearMessage());
+  }
 
   useEffect(() => {
     history.listen((location) => {
@@ -58,11 +63,11 @@ const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       {currentUser ? (
-        <Link to={"/dashboard"} className="navbar-brand text-dark mx-auto">
+        <Link to={"/dashboard"} className="navbar-brand text-dark mx-auto" onClick={clearMessageHandler}>
           UMI
         </Link>
       ) : (
-        <Link to={"/login"} className="navbar-brand text-dark mx-3 px-3">
+        <Link to={"/login"} className="navbar-brand text-dark mx-3 px-3" onClick={clearMessageHandler}>
           UMI
         </Link>
       )}
@@ -82,41 +87,41 @@ const Navbar = () => {
       <div className="collapse navbar-collapse" id="navbarNavDropdown">
         <div className="navbar-nav mr-auto ">
           {showManagerBoard && (
-            <ul>
+            <>
               <li className="nav-item">
-                <Link to={"/dashboard"} className="nav-link text-dark">
+                <Link to={"/dashboard"} className="nav-link text-dark" onClick={clearMessageHandler}>
                   My Dashboard
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to={"/addUser"} className="nav-link text-dark">
+                <Link to={"/addUser"} className="nav-link text-dark" onClick={clearMessageHandler}>
                   Add User
                 </Link>
               </li>
-            </ul>
+            </>
           )}
 
           {showAdminBoard && (
             <li className="nav-item">
-              <Link to={"/admin"} className="nav-link text-dark">
+              <Link to={"/admin"} className="nav-link text-dark" onClick={clearMessageHandler}>
                 Admin Board
               </Link>
             </li>
           )}
 
           {showUserBoard && (
-            <ul>
+            <>
               <li className="nav-item">
-                <Link to={"/dashboard"} className="nav-link text-dark">
+                <Link to={"/dashboard"} className="nav-link text-dark" onClick={clearMessageHandler}>
                   My Dashboard
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to={"/addLog"} className="nav-link text-dark">
+                <Link to={"/addLog"} className="nav-link text-dark" onClick={clearMessageHandler}>
                   Add Log
                 </Link>
               </li>
-            </ul>
+            </>
           )}
         </div>
         {currentUser ? (

@@ -8,17 +8,18 @@ import { Redirect } from "react-router-dom";
 import { login } from "../../redux/actions/auth.actions.js";
 import { clearMessage } from "../../redux/actions/message.actions.js";
 
+
 const SignInForm = (props) => {
   let dispatch = useDispatch();
+
+  const [loading, setLoading] = useState(false);
+  const { isLoggedIn } = useSelector((state) => state.auth);
+  const { message } = useSelector((state) => state.message);
 
   const [userForm, setUserForm] = useState({
     email: "",
     password: "",
   });
-
-  const [loading, setLoading] = useState(false);
-  const { isLoggedIn } = useSelector((state) => state.auth);
-  const { message } = useSelector((state) => state.message);
 
   const changeHandler = async (e) => {
     await setUserForm({
@@ -40,11 +41,11 @@ const SignInForm = (props) => {
       });
   };
 
+
   useEffect(() => {
-    return () => {
       setUserForm({});
-      dispatch(clearMessage());
-    };
+      dispatch(clearMessage())
+
     // eslint-disable-next-line
   }, []);
 
@@ -66,6 +67,7 @@ const SignInForm = (props) => {
             onChange={changeHandler}
             value={userForm.email}
             className={styles.formInput}
+            required
           />
         </div>
         <div className={styles.formInputField}>
@@ -78,6 +80,7 @@ const SignInForm = (props) => {
             onChange={changeHandler}
             value={userForm.password}
             className={styles.formInput}
+            required
           />
         </div>
         <Button loading={loading} submit={submitHandler}>

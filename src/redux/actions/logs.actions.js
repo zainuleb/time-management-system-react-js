@@ -3,8 +3,8 @@ import {
   GETLOGS_FAIL,
   ADDLOG_SUCCESS,
   ADDLOG_FAIL,
-  DELLOG_SUCCESS,
-  DELLOG_FAIL,
+  PATCHLOG_SUCCESS,
+  PATCHLOG_FAIL,
   EDITLOG_SUCCESS,
   EDITLOG_FAIL,
   SET_MESSAGE,
@@ -80,7 +80,6 @@ export const addLog = (token, data) => (dispatch) => {
 
 //Func to Update Log
 export const updateLog = (id, userId, data, token) => (dispatch) => {
-  console.log(id, userId, data, token);
   return LogServices.updateLog(id, userId, data, token).then(
     (data) => {
       dispatch({
@@ -112,12 +111,12 @@ export const updateLog = (id, userId, data, token) => (dispatch) => {
   );
 };
 
-//Func to Delete Logs
-export const patchLog = (id, logId, token) => (dispatch) => {
-  return LogServices.delLog(id, logId, token).then(
+//Func to Patch Working Hours in Logs
+export const patchLog = (id, pref, token) => (dispatch) => {
+  return LogServices.patchLog(id, parseInt(pref), token).then(
     (data) => {
       dispatch({
-        type: DELLOG_SUCCESS,
+        type: PATCHLOG_SUCCESS,
         payload: { LOG: data },
       });
 
@@ -132,7 +131,7 @@ export const patchLog = (id, logId, token) => (dispatch) => {
         error.toString();
 
       dispatch({
-        type: DELLOG_FAIL,
+        type: PATCHLOG_FAIL,
       });
 
       dispatch({

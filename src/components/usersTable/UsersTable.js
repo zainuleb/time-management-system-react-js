@@ -42,11 +42,6 @@ const UsersTable = () => {
     // eslint-disable-next-line
   }, [user]);
 
-  /*   useEffect(() => {
-    dispatch(getUsers(user.token));
-    // eslint-disable-next-line
-  }, [users]); */
-
   return (
     <div>
       {showManagerDashboard && (
@@ -58,7 +53,7 @@ const UsersTable = () => {
         />
       )}
 
-      {showUserDashboard && logs && <LogsTableUI logs={logs} />}
+      {showUserDashboard && logs && <LogsTableUI workingHours={user.user.working_hours} logs={logs} />}
     </div>
   );
 };

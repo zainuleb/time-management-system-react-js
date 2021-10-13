@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./SignUpForm.module.css";
 import Button from "../UI/button/Button.js";
 
@@ -6,6 +6,7 @@ import Button from "../UI/button/Button.js";
 import { useDispatch, useSelector } from "react-redux";
 import { register } from "../../redux/actions/auth.actions";
 import { addUser } from "../../redux/actions/users.actions";
+import { clearMessage } from "../../redux/actions/message.actions";
 
 const SignUpForm = () => {
   const [userForm, setUserForm] = useState({
@@ -71,6 +72,13 @@ const SignUpForm = () => {
       });
   };
 
+  useEffect(() => {
+    setUserForm({});
+    dispatch(clearMessage());
+
+    // eslint-disable-next-line
+  }, []);
+
   return (
     <div className={styles.formWrapper}>
       <div className={styles.formTitle}>
@@ -89,6 +97,7 @@ const SignUpForm = () => {
                 onChange={changeHandler}
                 value={userForm.firstName}
                 className={styles.formInput}
+                required
               />
             </div>
             <div className={styles.formInputField}>
@@ -101,6 +110,7 @@ const SignUpForm = () => {
                 onChange={changeHandler}
                 value={userForm.lastName}
                 className={styles.formInput}
+                required
               />
             </div>
             <div className={styles.formInputField}>
@@ -113,6 +123,7 @@ const SignUpForm = () => {
                 onChange={changeHandler}
                 value={userForm.email}
                 className={styles.formInput}
+                required
               />
             </div>
             <div className={styles.formInputField}>
@@ -125,6 +136,7 @@ const SignUpForm = () => {
                 onChange={changeHandler}
                 value={userForm.password}
                 className={styles.formInput}
+                required
               />
             </div>
             <div className={styles.formInputField}>
@@ -137,6 +149,7 @@ const SignUpForm = () => {
                 onChange={changeHandler}
                 value={userForm.password_confirmation}
                 className={styles.formInput}
+                required
               />
             </div>
             {user ? (

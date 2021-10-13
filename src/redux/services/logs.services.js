@@ -28,7 +28,6 @@ const getFilteredLogs = (start, end, token) => {
 
 //Func to Add LOG
 const addLog = (token, data) => {
-  console.log(data, token);
   return axios
     .post(
       "http://34.210.129.167/api/work-logs",
@@ -44,7 +43,7 @@ const addLog = (token, data) => {
       }
     )
     .then((response) => {
-      console.log(response);
+
       return response.data;
     });
 };
@@ -70,12 +69,12 @@ const updateLog = (id, userId, data, token) => {
     });
 };
 
-//Func to Delete LOG
+//Func to Patch LOG
 const patchLog = (id, pref, token) => {
   return axios
     .patch(
       `http://34.210.129.167/api/users/${id}/preferred-working-hours`,
-      { workingHours: pref },
+      { workingHours: pref},
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -83,6 +82,7 @@ const patchLog = (id, pref, token) => {
       }
     )
     .then((response) => {
+
       return response.data;
     });
 };

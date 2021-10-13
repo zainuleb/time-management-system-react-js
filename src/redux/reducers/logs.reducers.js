@@ -1,4 +1,7 @@
-import { GETLOGS_SUCCESS, GETLOGS_FAIL } from "../helpers/types.js";
+import {
+  GETLOGS_SUCCESS,
+  GETLOGS_FAIL,
+} from "../helpers/types.js";
 
 const initialState = {
   logs: null,
