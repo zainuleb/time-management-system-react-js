@@ -13,7 +13,7 @@ const UsersTableUI = ({ user, users, delUser, dispatch }) => {
   ];
 
   return (
-    <>
+    <div>
       <div className="d-flex flex-row-reverse">
         {users ? (
           <CSVLink data={users} headers={headers} filename="Users Report.csv">
@@ -65,7 +65,7 @@ const UsersTableUI = ({ user, users, delUser, dispatch }) => {
           )}
         </tbody>
       </table>
-    </>
+    </div>
   );
 };
 

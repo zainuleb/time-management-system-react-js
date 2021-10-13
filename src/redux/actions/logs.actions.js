@@ -79,9 +79,9 @@ export const addLog = (token, data) => (dispatch) => {
 };
 
 //Func to Update Log
-export const updateLog = (id, data, token) => (dispatch) => {
-  console.log(id, data, token);
-  return LogServices.updateLog(id, data, token).then(
+export const updateLog = (id, userId, data, token) => (dispatch) => {
+  console.log(id, userId, data, token);
+  return LogServices.updateLog(id, userId, data, token).then(
     (data) => {
       dispatch({
         type: EDITLOG_SUCCESS,

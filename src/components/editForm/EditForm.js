@@ -51,6 +51,10 @@ const EditForm = () => {
     });
   };
 
+  const refreshMessage = () => {
+    dispatch(clearMessage());
+  };
+
   const submitHandler = async (e) => {
     e.preventDefault();
     setSuccessful(false);
@@ -68,16 +72,12 @@ const EditForm = () => {
       });
   };
 
-  const refreshMessage = () => {
-    dispatch(clearMessage());
-  };
-
   return (
     <div className={styles.formWrapper}>
       <div className={styles.formTitle}>Update User</div>
       <form onSubmit={submitHandler} className={styles.form}>
         {!successful && (
-          <>
+          <div>
             <div className={styles.formInputField}>
               <label>First Name</label>
               <input
@@ -142,7 +142,7 @@ const EditForm = () => {
             <Button loading={loading} submit={submitHandler}>
               Update User
             </Button>
-          </>
+          </div>
         )}
 
         {message && (

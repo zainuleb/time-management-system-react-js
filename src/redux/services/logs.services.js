@@ -50,10 +50,10 @@ const addLog = (token, data) => {
 };
 
 //Func to Update LOG
-const updateLog = (id, logId, data, token) => {
+const updateLog = (id, userId, data, token) => {
   return axios
     .put(
-      `http://34.210.129.167/api/user/${id}/work-logs/${logId}`,
+      `http://34.210.129.167/api/user/${userId}/work-logs/${id}`,
       {
         logDate: data.logDate,
         hours: data.hours,
@@ -71,13 +71,17 @@ const updateLog = (id, logId, data, token) => {
 };
 
 //Func to Delete LOG
-const patchLog = (id, token) => {
+const patchLog = (id, pref, token) => {
   return axios
-    .patch(`http://34.210.129.167/api/users/${id}/preferred-working-hours`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
+    .patch(
+      `http://34.210.129.167/api/users/${id}/preferred-working-hours`,
+      { workingHours: pref },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
     .then((response) => {
       return response.data;
     });

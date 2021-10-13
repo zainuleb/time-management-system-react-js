@@ -82,7 +82,7 @@ const Navbar = () => {
       <div className="collapse navbar-collapse" id="navbarNavDropdown">
         <div className="navbar-nav mr-auto ">
           {showManagerBoard && (
-            <>
+            <ul>
               <li className="nav-item">
                 <Link to={"/dashboard"} className="nav-link text-dark">
                   My Dashboard
@@ -93,7 +93,7 @@ const Navbar = () => {
                   Add User
                 </Link>
               </li>
-            </>
+            </ul>
           )}
 
           {showAdminBoard && (
@@ -105,7 +105,7 @@ const Navbar = () => {
           )}
 
           {showUserBoard && (
-            <>
+            <ul>
               <li className="nav-item">
                 <Link to={"/dashboard"} className="nav-link text-dark">
                   My Dashboard
@@ -116,7 +116,7 @@ const Navbar = () => {
                   Add Log
                 </Link>
               </li>
-            </>
+            </ul>
           )}
         </div>
         {currentUser ? (

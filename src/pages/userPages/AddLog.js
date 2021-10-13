@@ -52,7 +52,7 @@ const AddLog = () => {
       </div>
       <form className={styles.form}>
         {!successful && (
-          <>
+          <div>
             <div className={styles.formInputField}>
               <label>Log Date</label>
               <input
@@ -91,7 +91,7 @@ const AddLog = () => {
             <Button loading={loading} submit={submitLogHandler}>
               Add Log
             </Button>
-          </>
+          </div>
         )}
 
         {message && (

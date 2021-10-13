@@ -1,3 +1,4 @@
+import React from "react";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -18,7 +19,7 @@ import EditForm from "./components/editForm/EditForm.js";
 
 //User Imports
 import AddLog from "./pages/userPages/AddLog";
-import EditLog from "./pages/userPages/EditLog.js";
+import EditLog from "./pages/userPages/EditLog";
 
 function App() {
   return (
@@ -33,11 +34,11 @@ function App() {
 
         {/* Manager Routes */}
         <ManagerRoutes path="/addUser" exact component={AddUser} />
-        <ManagerRoutes path="/editUser/:id" component={EditForm} />
+        <ManagerRoutes path="/editUser/:id" exact component={EditForm} />
 
         {/* User Routes */}
         <UserRoutes path="/addLog" component={AddLog} />
-        <UserRoutes path="/editLog/:id" component={EditLog} />
+        <Route path="/updatelog/:id" component={EditLog} />
       </Switch>
     </div>
   );

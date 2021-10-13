@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import * as Icon from "react-bootstrap-icons";
 import { Link } from "react-router-dom";
 import { CSVLink } from "react-csv";
+/* import { Modal } from "react-bootstrap"; */
 
 const LogsTableUI = ({ logs }) => {
   const headers = [
@@ -12,7 +13,7 @@ const LogsTableUI = ({ logs }) => {
   ];
 
   return (
-    <>
+    <div>
       <div className="d-flex flex-row-reverse">
         {logs ? (
           <CSVLink data={logs} headers={headers} filename="Logs Report.csv">
@@ -45,11 +46,11 @@ const LogsTableUI = ({ logs }) => {
                   <td>{logRow.hours ? logRow.hours : "-"}</td>
                   <td>{logRow.description}</td>
                   <td>
-                    <Link to={`/editlog/${id}`}>
+                    <Link to={`/updatelog/${id}`}>
                       <Icon.Pen color={"white"} size={26} />
                     </Link>
                   </td>
-                  <td /* (logRow.id, log.token) */>
+                  <td>
                     <Icon.Clock size={26} />
                   </td>
                 </tr>
@@ -62,7 +63,7 @@ const LogsTableUI = ({ logs }) => {
           )}
         </tbody>
       </table>
-    </>
+    </div>
   );
 };
 

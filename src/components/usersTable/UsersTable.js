@@ -48,7 +48,7 @@ const UsersTable = () => {
   }, [users]); */
 
   return (
-    <>
+    <div>
       {showManagerDashboard && (
         <UsersTableUI
           user={user}
@@ -59,7 +59,7 @@ const UsersTable = () => {
       )}
 
       {showUserDashboard && logs && <LogsTableUI logs={logs} />}
-    </>
+    </div>
   );
 };
 

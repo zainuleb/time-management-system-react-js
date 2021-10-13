@@ -4,9 +4,9 @@ import SignUpForm from "../components/signUpForm/SignUpForm";
 const Register = () => {
   console.log("here");
   return (
-    <div>
+    <React.Fragment>
       <SignUpForm />
-    </div>
+    </React.Fragment>
   );
 };
 

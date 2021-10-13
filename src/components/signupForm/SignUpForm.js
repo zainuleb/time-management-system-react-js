@@ -78,7 +78,7 @@ const SignUpForm = () => {
       </div>
       <form className={styles.form}>
         {!successful && (
-          <>
+          <div>
             <div className={styles.formInputField}>
               <label>First Name</label>
               <input
@@ -148,7 +148,7 @@ const SignUpForm = () => {
                 Register
               </Button>
             )}
-          </>
+          </div>
         )}
 
         {message && (
