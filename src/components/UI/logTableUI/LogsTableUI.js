@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState} from "react";
 import WorkingHourModal from "../workingHourModal/WorkingHourModal";
 import { Link } from "react-router-dom";
 import { CSVLink } from "react-csv";
@@ -60,7 +60,7 @@ const LogsTableUI = ({ workingHours,logs }) => {
               if(logRow.hours<workingHours){return (
                 <tr key={logRow.id} >
                   <th scope="row">{logRow.id}</th>
-                  <td>{logRow.log_date}F</td>
+                  <td>{logRow.log_date}</td>
                   <td className="bg-danger text-red">{logRow.hours ? logRow.hours : "-"}</td>
                   <td>{logRow.description}</td>
                   <td>
@@ -73,9 +73,9 @@ const LogsTableUI = ({ workingHours,logs }) => {
 
               else
               return (
-                <tr key={logRow.id} style={{backgroundColor:"red"}}>
+                <tr key={logRow.id}>
                   <th scope="row">{logRow.id}</th>
-                  <td>{logRow.log_date}F</td>
+                  <td>{logRow.log_date}</td>
                   <td>{logRow.hours ? logRow.hours : "-"}</td>
                   <td>{logRow.description}</td>
                   <td>

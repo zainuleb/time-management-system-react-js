@@ -16,7 +16,6 @@ const WorkingHourModal = ({handleClose}) => {
 
   const submitHoursHandler = async (e) => {
     e.preventDefault();
-    console.log(user.user.id, workingHours, user.token)
     dispatch(patchLog(user.user.id, workingHours, user.token));
   };
 
