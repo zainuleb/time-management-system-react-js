@@ -1,4 +1,4 @@
-import { GETUSERS_SUCCESS, GETUSERS_FAIL } from "../helpers/types.js";
+import { GETUSERS_SUCCESS, GETUSERS_FAIL,GETCURRENTPAGE_SUCCESS } from "../helpers/types.js";
 
 const initialState = {
   users: null,
@@ -12,8 +12,13 @@ export default function users(state = initialState, action) {
     case GETUSERS_SUCCESS:
       return {
         ...state,
-        users: payload.users,
+        users: payload.users
       };
+      case GETCURRENTPAGE_SUCCESS:
+        return {
+          ...state,
+          users: payload.users
+        };
     case GETUSERS_FAIL:
       return {
         ...state,

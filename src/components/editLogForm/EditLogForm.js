@@ -5,12 +5,16 @@ import { updateLog } from "../../redux/actions/logs.actions";
 import { clearMessage } from "../../redux/actions/message.actions";
 
 const EditLogForm = ({ id, logs, user }) => {
+
   let dispatch = useDispatch();
-  const [userId, setUserId] = useState("");
+  
+  //Selectors from Redux
   const { message } = useSelector((state) => state.message);
+  
+  //States Initialized
+  const [userId, setUserId] = useState("");
   const [loading, setLoading] = useState(false);
   const [successful, setSuccessful] = useState(false);
-
   const [logForm, setLogForm] = useState({
     logDate: "",
     hours: 0,
@@ -26,7 +30,7 @@ const EditLogForm = ({ id, logs, user }) => {
       // eslint-disable-next-line
       setUserId(logsData.user_id);
       setLogForm({
-        logDate: logsData.logDate,
+        logDate: logsData.log_date,
         hours: logsData.hours,
         description: logsData.description,
       });
@@ -34,6 +38,7 @@ const EditLogForm = ({ id, logs, user }) => {
     // eslint-disable-next-line
   }, [logs]);
 
+    //Handler func's
   const changeHandler = async (e) => {
     await setLogForm({
       ...logForm,

@@ -27,12 +27,12 @@ const Profile = () => {
   }
 
   return (
-    <div className="container p-2 m-3">
-      <header className="jumbotron">
+    <div className="container p-2 my-4">
+      <header className="jumbotron userHeader">
         <h3>
           Welcome <strong>{user.user.firstName} </strong>
         </h3>
-        {subTitle}
+        <p>{subTitle}</p>
       </header>
     </div>
   );

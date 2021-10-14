@@ -8,19 +8,21 @@ import { Redirect } from "react-router-dom";
 import { login } from "../../redux/actions/auth.actions.js";
 import { clearMessage } from "../../redux/actions/message.actions.js";
 
-
 const SignInForm = (props) => {
   let dispatch = useDispatch();
 
-  const [loading, setLoading] = useState(false);
+  //Selectors from Redux
   const { isLoggedIn } = useSelector((state) => state.auth);
   const { message } = useSelector((state) => state.message);
 
+  //States Initialized
+  const [loading, setLoading] = useState(false);
   const [userForm, setUserForm] = useState({
     email: "",
     password: "",
   });
 
+  //Handler func's
   const changeHandler = async (e) => {
     await setUserForm({
       ...userForm,
@@ -41,14 +43,15 @@ const SignInForm = (props) => {
       });
   };
 
-
+  //Side Effects
   useEffect(() => {
-      setUserForm({});
-      dispatch(clearMessage())
+    setUserForm({});
+    dispatch(clearMessage());
 
     // eslint-disable-next-line
   }, []);
 
+  //Redirect incase of Login
   if (isLoggedIn) {
     return <Redirect to="/dashboard" />;
   }
@@ -65,7 +68,7 @@ const SignInForm = (props) => {
             name="email"
             placeholder="Your email Address"
             onChange={changeHandler}
-            value={userForm.email}
+            value={userForm.email || ""}
             className={styles.formInput}
             required
           />
@@ -78,7 +81,7 @@ const SignInForm = (props) => {
             name="password"
             placeholder="Your password"
             onChange={changeHandler}
-            value={userForm.password}
+            value={userForm.password || ""}
             className={styles.formInput}
             required
           />

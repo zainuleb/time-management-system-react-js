@@ -1,6 +1,7 @@
 import {
   GETUSERS_SUCCESS,
   GETUSERS_FAIL,
+  GETCURRENTPAGE_SUCCESS,
   ADDUSER_SUCCESS,
   ADDUSER_FAIL,
   DELUSER_SUCCESS,
@@ -18,7 +19,7 @@ export const getUsers = (token) => (dispatch) => {
     (data) => {
       dispatch({
         type: GETUSERS_SUCCESS,
-        payload: { users: data.users.data },
+        payload: { users: data.users },
       });
 
       return Promise.resolve();
@@ -80,7 +81,6 @@ export const addUser = (data, token) => (dispatch) => {
 
 //Func to Update Users
 export const updateUser = (id, data, token) => (dispatch) => {
-  console.log(id, data, token);
   return UserServices.updateUser(id, data, token).then(
     (data) => {
       dispatch({
@@ -133,6 +133,40 @@ export const delUser = (id, token) => (dispatch) => {
 
       dispatch({
         type: DELUSER_FAIL,
+      });
+
+      dispatch({
+        type: SET_MESSAGE,
+        payload: message,
+      });
+
+      return Promise.reject();
+    }
+  );
+  
+};
+
+//Func to Delete Users
+export const getCurrentPage = (token,pageUrl) => (dispatch) => {
+  return UserServices.getCurrentPage(token,pageUrl).then(
+    (data) => {
+      dispatch({
+        type: GETCURRENTPAGE_SUCCESS,
+        payload: { users: data.users},
+      });
+
+      return Promise.resolve();
+    },
+    (error) => {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+
+      dispatch({
+        type: GETUSERS_FAIL,
       });
 
       dispatch({

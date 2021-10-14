@@ -1,6 +1,7 @@
 import React from "react";
-import { history } from '../helpers/history';
+import { history } from "../helpers/history";
 
+//Parse Token
 const parseJwt = (token) => {
   try {
     return JSON.parse(atob(token.split(".")[1]));
@@ -9,6 +10,7 @@ const parseJwt = (token) => {
   }
 };
 
+//Verify Token
 const AuthVerify = (props) => {
   history.listen(() => {
     const user = JSON.parse(localStorage.getItem("user"));

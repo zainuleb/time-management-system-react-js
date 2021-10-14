@@ -10,15 +10,18 @@ import LogsTableUI from "../UI/logTableUI/LogsTableUI";
 
 const UsersTable = () => {
   let dispatch = useDispatch();
+
+  //Selectors from Redux
   const { user } = useSelector((state) => state.auth);
   const { users } = useSelector((state) => state.users);
   const { logs } = useSelector((state) => state.logs);
 
-  // eslint-disable-next-line
+  //States Initialized
   const [showAdminDashboard, setShowAdminDashboard] = useState(false);
   const [showManagerDashboard, setShowManagerDashboard] = useState(false);
   const [showUserDashboard, setShowUserDashboard] = useState(false);
 
+  //Side Effects
   useEffect(() => {
     if (user) {
       let role = user.user.roles[0].name;
@@ -29,6 +32,8 @@ const UsersTable = () => {
       }
       if (role === "admin") {
         setShowAdminDashboard(true);
+        dispatch(getUsers(user.token));
+        dispatch(getLogs(user.user.id, user.token));
       }
       if (role === "user") {
         setShowUserDashboard(true);
@@ -44,16 +49,28 @@ const UsersTable = () => {
 
   return (
     <div>
-      {showManagerDashboard && (
+      {user && users && showAdminDashboard && (
         <UsersTableUI
           user={user}
-          users={users}
+          users={users.data}
+          usersListing={users}
+          workingHours={user.user.working_hours}
+          logs={logs}
+          dispatch={dispatch}
+        />
+      )}
+      {users && showManagerDashboard && (
+        <UsersTableUI
+          user={user}
+          users={users.data}
+          usersListing={users}
           delUser={delUser}
           dispatch={dispatch}
         />
       )}
-
-      {showUserDashboard && logs && <LogsTableUI workingHours={user.user.working_hours} logs={logs} />}
+      {showUserDashboard && logs && (
+        <LogsTableUI workingHours={user.user.working_hours} logs={logs} />
+      )}
     </div>
   );
 };

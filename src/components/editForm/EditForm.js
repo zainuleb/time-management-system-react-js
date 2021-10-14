@@ -12,14 +12,14 @@ const EditForm = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
 
+  //Selectors from Redux
   const { user } = useSelector((state) => state.auth);
   const { users } = useSelector((state) => state.users);
-
   const { message } = useSelector((state) => state.message);
 
+  //States Initialized
   const [loading, setLoading] = useState(false);
   const [successful, setSuccessful] = useState(false);
-
   const [userForm, setUserForm] = useState({
     firstName: "",
     lastName: "",
@@ -29,9 +29,10 @@ const EditForm = () => {
     userType: "users",
   });
 
+  //Side Effects
   useEffect(() => {
-    if (users.length > 0) {
-      const userData = users.find((user) => {
+    if (users.data) {
+      const userData = users.data.find((user) => {
         return user.id.toString() === id.toString();
       });
 
@@ -44,6 +45,8 @@ const EditForm = () => {
     // eslint-disable-next-line
   }, [users]);
 
+
+  //Handler func's
   const changeHandler = async (e) => {
     await setUserForm({
       ...userForm,
@@ -86,7 +89,7 @@ const EditForm = () => {
                 name="firstName"
                 placeholder="Your name.."
                 onChange={changeHandler}
-                value={userForm.firstName}
+                value={userForm.firstName || ""}
                 className={styles.formInput}
               />
             </div>
@@ -98,7 +101,7 @@ const EditForm = () => {
                 name="lastName"
                 placeholder="Your last name.."
                 onChange={changeHandler}
-                value={userForm.lastName}
+                value={userForm.lastName || ""}
                 className={styles.formInput}
               />
             </div>
@@ -110,7 +113,7 @@ const EditForm = () => {
                 name="email"
                 placeholder="Your email Address"
                 onChange={changeHandler}
-                value={userForm.email}
+                value={userForm.email || ""}
                 className={styles.formInput}
               />
             </div>
@@ -122,7 +125,7 @@ const EditForm = () => {
                 name="password"
                 placeholder="Your password"
                 onChange={changeHandler}
-                value={userForm.password}
+                value={userForm.password || ""}
                 className={styles.formInput}
               />
             </div>
@@ -134,7 +137,7 @@ const EditForm = () => {
                 name="password_confirmation"
                 placeholder="Confirm Password"
                 onChange={changeHandler}
-                value={userForm.password_confirmation}
+                value={userForm.password_confirmation || ""}
                 className={styles.formInput}
               />
             </div>

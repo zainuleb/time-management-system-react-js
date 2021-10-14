@@ -9,6 +9,16 @@ import { addUser } from "../../redux/actions/users.actions";
 import { clearMessage } from "../../redux/actions/message.actions";
 
 const SignUpForm = () => {
+
+  const dispatch = useDispatch();
+
+  //Selectors from Redux
+  const { message } = useSelector((state) => state.message);
+  const { user } = useSelector((state) => state.auth);
+
+  //States Initialized
+  const [loading, setLoading] = useState(false);
+  const [successful, setSuccessful] = useState(false);
   const [userForm, setUserForm] = useState({
     firstName: "",
     lastName: "",
@@ -17,13 +27,9 @@ const SignUpForm = () => {
     password_confirmation: "",
   });
 
-  const [loading, setLoading] = useState(false);
-  const [successful, setSuccessful] = useState(false);
-  const { message } = useSelector((state) => state.message);
-  const { user } = useSelector((state) => state.auth);
 
-  const dispatch = useDispatch();
 
+  //Handler func's
   const changeHandler = async (e) => {
     await setUserForm({
       ...userForm,

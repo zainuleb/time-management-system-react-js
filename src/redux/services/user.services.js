@@ -15,6 +15,19 @@ const getUsers = (token) => {
     });
 };
 
+//Func to Get Users
+const getCurrentPage = (token,page) => {
+  return axios
+    .get(`${page}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then((response) => {
+      return response.data;
+    });
+};
+
 //Func to Add Users
 const addUser = (data, token) => {
   return axios
@@ -81,5 +94,5 @@ export default {
   getUsers,
   addUser,
   delUser,
-  updateUser,
+  updateUser,getCurrentPage
 };

@@ -6,7 +6,6 @@ import { useSelector } from "react-redux";
 export const AdminRoutes = ({ component: Component, ...rest }) => {
   // eslint-disable-next-line
   const { isLoggedIn, user } = useSelector((state) => state.auth);
-  console.log(Component);
   return (
     <>
       <Route

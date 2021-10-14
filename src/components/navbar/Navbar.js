@@ -9,6 +9,7 @@ import { clearMessage } from "../../redux/actions/message.actions.js";
 import EventBus from "../../common/EventBus.js";
 
 const Navbar = () => {
+
   //Role States of Respective Users
   const [showAdminBoard, setShowAdminBoard] = useState(false);
   const [showManagerBoard, setShowManagerBoard] = useState(false);
@@ -16,11 +17,12 @@ const Navbar = () => {
 
   const { user: currentUser } = useSelector((state) => state.auth);
 
+
   const dispatch = useDispatch();
 
-  const clearMessageHandler= ()=>{
+  const clearMessageHandler = () => {
     dispatch(clearMessage());
-  }
+  };
 
   useEffect(() => {
     history.listen((location) => {
@@ -60,19 +62,38 @@ const Navbar = () => {
     };
   }, [currentUser, logOut]);
 
+  //Toggle States
+  const [toogle, setToggle] = useState("");
+  const [menu, setMenu] = useState("");
+  const toggleMenu = () => {
+    setToggle(toogle === "" ? "on" : "");
+    setMenu(menu === "" ? "show" : "");
+  };
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
+
+      {/* Render User Nav based on Role */}
+      
       {currentUser ? (
-        <Link to={"/dashboard"} className="navbar-brand text-dark mx-auto" onClick={clearMessageHandler}>
-          UMI
+        <Link
+          to={"/dashboard"}
+          className="navbar-brand text-dark mx-3 px-3"
+          onClick={clearMessageHandler}
+        >
+          UMSYS
         </Link>
       ) : (
-        <Link to={"/login"} className="navbar-brand text-dark mx-3 px-3" onClick={clearMessageHandler}>
-          UMI
+        <Link
+          to={"/login"}
+          className="navbar-brand text-dark mx-3 px-3"
+          onClick={clearMessageHandler}
+        >
+          UMSYS
         </Link>
       )}
-
       <button
+        onClick={toggleMenu}
         className="navbar-toggler"
         type="button"
         data-toggle="collapse"
@@ -84,17 +105,25 @@ const Navbar = () => {
         <span className="navbar-toggler-icon"></span>
       </button>
 
-      <div className="collapse navbar-collapse" id="navbarNavDropdown">
-        <div className="navbar-nav mr-auto ">
+      <div className={`collapsed ${menu}`} id="navbarNavDropdown">
+        <div className="navbar-nav mx-auto">
           {showManagerBoard && (
             <>
               <li className="nav-item">
-                <Link to={"/dashboard"} className="nav-link text-dark" onClick={clearMessageHandler}>
+                <Link
+                  to={"/dashboard"}
+                  className="nav-link text-dark"
+                  onClick={clearMessageHandler}
+                >
                   My Dashboard
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to={"/addUser"} className="nav-link text-dark" onClick={clearMessageHandler}>
+                <Link
+                  to={"/addUser"}
+                  className="nav-link text-dark"
+                  onClick={clearMessageHandler}
+                >
                   Add User
                 </Link>
               </li>
@@ -102,55 +131,78 @@ const Navbar = () => {
           )}
 
           {showAdminBoard && (
-            <li className="nav-item">
-              <Link to={"/admin"} className="nav-link text-dark" onClick={clearMessageHandler}>
-                Admin Board
-              </Link>
-            </li>
+            <>
+              <li className="nav-item">
+                <Link
+                  to={"/dashboard"}
+                  className="nav-link text-dark"
+                  onClick={clearMessageHandler}
+                >
+                  Dashboard
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link
+                  to={"/addUser"}
+                  className="nav-link text-dark"
+                  onClick={clearMessageHandler}
+                >
+                  Add Users
+                </Link>
+              </li>
+            </>
           )}
 
           {showUserBoard && (
             <>
               <li className="nav-item">
-                <Link to={"/dashboard"} className="nav-link text-dark" onClick={clearMessageHandler}>
+                <Link
+                  to={"/dashboard"}
+                  className="nav-link text-dark"
+                  onClick={clearMessageHandler}
+                >
                   My Dashboard
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to={"/addLog"} className="nav-link text-dark" onClick={clearMessageHandler}>
+                <Link
+                  to={"/addLog"}
+                  className="nav-link text-dark"
+                  onClick={clearMessageHandler}
+                >
                   Add Log
                 </Link>
               </li>
             </>
           )}
-        </div>
-        {currentUser ? (
-          <div className="navbar-nav ml-auto">
-            <li className="nav-item">
-              <Link
-                to="/login"
-                className="nav-link text-danger"
-                onClick={logOut}
-              >
-                LogOut
-              </Link>
-            </li>
-          </div>
-        ) : (
-          <div className="navbar-nav mx-auto">
-            <li className="nav-item">
-              <Link to={"/login"} className="nav-link text-dark">
-                Login
-              </Link>
-            </li>
+          {currentUser ? (
+            <div className="navbar-nav mx-auto">
+              <li className="nav-item">
+                <Link
+                  to="/login"
+                  className="nav-link text-danger"
+                  onClick={logOut}
+                >
+                  LogOut
+                </Link>
+              </li>
+            </div>
+          ) : (
+            <div className="navbar-nav mx-auto">
+              <li className="nav-item">
+                <Link to={"/login"} className="nav-link text-dark">
+                  Login
+                </Link>
+              </li>
 
-            <li className="nav-item">
-              <Link to={"/register"} className="nav-link text-dark">
-                Sign Up
-              </Link>
-            </li>
-          </div>
-        )}
+              <li className="nav-item">
+                <Link to={"/register"} className="nav-link text-dark">
+                  Sign Up
+                </Link>
+              </li>
+            </div>
+          )}
+        </div>
       </div>
     </nav>
   );
