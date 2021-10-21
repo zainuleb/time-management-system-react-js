@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/'https://zainuleb.github.io/time-management-system-react-js/static/css/main.ac08cf2a.chunk.css",
+    "main.js": "/'https://zainuleb.github.io/time-management-system-react-js/static/js/main.65585a4b.chunk.js",
+    "main.js.map": "/'https://zainuleb.github.io/time-management-system-react-js/static/js/main.65585a4b.chunk.js.map",
+    "runtime-main.js": "/'https://zainuleb.github.io/time-management-system-react-js/static/js/runtime-main.7574181c.js",
+    "runtime-main.js.map": "/'https://zainuleb.github.io/time-management-system-react-js/static/js/runtime-main.7574181c.js.map",
+    "static/css/2.0a9ec390.chunk.css": "/'https://zainuleb.github.io/time-management-system-react-js/static/css/2.0a9ec390.chunk.css",
+    "static/js/2.f07e1aae.chunk.js": "/'https://zainuleb.github.io/time-management-system-react-js/static/js/2.f07e1aae.chunk.js",
+    "static/js/2.f07e1aae.chunk.js.map": "/'https://zainuleb.github.io/time-management-system-react-js/static/js/2.f07e1aae.chunk.js.map",
+    "index.html": "/'https://zainuleb.github.io/time-management-system-react-js/index.html",
+    "static/css/2.0a9ec390.chunk.css.map": "/'https://zainuleb.github.io/time-management-system-react-js/static/css/2.0a9ec390.chunk.css.map",
+    "static/css/main.ac08cf2a.chunk.css.map": "/'https://zainuleb.github.io/time-management-system-react-js/static/css/main.ac08cf2a.chunk.css.map",
+    "static/js/2.f07e1aae.chunk.js.LICENSE.txt": "/'https://zainuleb.github.io/time-management-system-react-js/static/js/2.f07e1aae.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.7574181c.js",
+    "static/css/2.0a9ec390.chunk.css",
+    "static/js/2.f07e1aae.chunk.js",
+    "static/css/main.ac08cf2a.chunk.css",
+    "static/js/main.65585a4b.chunk.js"
+  ]
+}
